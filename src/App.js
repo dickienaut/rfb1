@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import Navbar from './components/layout/Navbar.js'
-import UserItem from './components/users/UserItem.js'
+import Users from './components/users/Users.js'
 import './App.css';
 
 class App extends Component {
@@ -9,7 +9,9 @@ class App extends Component {
 
       <Fragment>
         <Navbar title=' Github Finder' icon={'fab fa-github'}/>
-        <UserItem />
+        <div className='container'>
+          <Users />
+        </div>
       </Fragment>
     );
   }
