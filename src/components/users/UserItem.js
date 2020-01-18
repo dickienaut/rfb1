@@ -4,6 +4,7 @@ import React from 'react'
 const UserItem = ({user}) => {
 
   return(
+    
     <div className="card text-center">
       <img src={user.avatar_url} alt='' className='round-img' style={{width: '60px'}}/>
       <h3>{user.login}</h3>

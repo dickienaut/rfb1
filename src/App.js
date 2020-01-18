@@ -12,10 +12,6 @@ class App extends Component {
     input: ''
   }
 
-  componentDidMount() {
-
-  }
-
 
   changeText = (text) => {
     this.setState({
@@ -42,21 +38,35 @@ class App extends Component {
   }
 
 
+  clearUsers = () => {
+    this.setState({
+      users: []
+    })
+  }
+
+
   render() {
     const {users, loading, input} = this.state
-    // const filteredUsers = users.filter(user => user.login.icludes(input))
     console.log()
+
     return (
 
       <Fragment>
         <Navbar title=' Github Finder' icon={'fab fa-github'}/>
         <div>
-          <Search input={input} changeText={this.changeText} searchUsers={this.searchUsers}/>
+          <Search
+            input={input}
+            changeText={this.changeText}
+            searchUsers={this.searchUsers}
+            clearUsers={this.clearUsers}
+            showClear={users.length > 0 ? true : false}
+            />
         </div>
         <div className='container'>
           <Users loading={loading} users={users}/>
         </div>
       </Fragment>
+
     );
   }
 }
