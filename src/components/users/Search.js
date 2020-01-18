@@ -33,7 +33,3 @@ class Search extends Component {
 }
 
 export default Search;
-
-
-// _rsc
-// _cer

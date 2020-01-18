@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
 
 const Navbar = ({title, icon}) => {
@@ -10,6 +11,8 @@ const Navbar = ({title, icon}) => {
         <i className={icon}/>
         {title}
       </h1>
+      <Link exact to='/'>Home</Link>
+      <Link exact to='/about'>About</Link>
     </nav>
   )
 }

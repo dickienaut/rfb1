@@ -1,8 +1,10 @@
 import React, {Component, Fragment} from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Navbar from './components/layout/Navbar.js'
 import Users from './components/users/Users.js'
 import Search from './components/users/Search.js'
 import Alert from './components/layout/Alert.js'
+import About from './components/pages/About.js'
 import './App.css';
 
 class App extends Component {
@@ -70,26 +72,39 @@ class App extends Component {
 
     return (
 
-      <Fragment>
-        <Navbar title=' Github Finder' icon={'fab fa-github'}/>
-        <div>
-          {alert ? <Alert alert={alert}/> : null}
-          <Search
-            input={input}
-            changeText={this.changeText}
-            searchUsers={this.searchUsers}
-            clearUsers={this.clearUsers}
-            showClear={users.length > 0 ? true : false}
-            setAlert={this.setAlert}
-            />
-        </div>
-        <div className='container'>
-          <Users loading={loading} users={users}/>
-        </div>
-      </Fragment>
-
+      <Router>
+        <Fragment>
+          <Navbar title=' Github Finder' icon={'fab fa-github'}/>
+          <Switch>
+          <Route exact path='/' render={props => (
+            <Fragment>
+              <div>
+              {alert ? <Alert alert={alert}/> : null}
+              <Search
+                input={input}
+                changeText={this.changeText}
+                searchUsers={this.searchUsers}
+                clearUsers={this.clearUsers}
+                showClear={users.length > 0 ? true : false}
+                setAlert={this.setAlert}
+                />
+            </div>
+            <div className='container'>
+              <Users loading={loading} users={users}/>
+            </div>
+          </Fragment>
+          )}
+          />
+          <Route exact path='/about' component={About}/>
+          </Switch>
+        </Fragment>
+      </Router>
     );
   }
 }
 
 export default App;
+
+
+// _rsc
+// _cer
