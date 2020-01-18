@@ -13,22 +13,31 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      loading: true
-    })
 
-  fetch(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
-    .then(res => res.json())
-    .then(users => this.setState({
-      users: users,
-      loading: false
-    }))
   }
 
 
   changeText = (text) => {
     this.setState({
       input: text
+    })
+  }
+
+
+  searchUsers = async (text) => {
+    this.setState({
+      loading: true
+    })
+
+    fetch(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+      .then(res => res.json())
+      .then(users => this.setState({
+              users: users.items,
+              loading: false
+            }))
+
+    this.setState({
+      input: ''
     })
   }
 
@@ -42,7 +51,7 @@ class App extends Component {
       <Fragment>
         <Navbar title=' Github Finder' icon={'fab fa-github'}/>
         <div>
-          <Search input={input} changeText={this.changeText}/>
+          <Search input={input} changeText={this.changeText} searchUsers={this.searchUsers}/>
         </div>
         <div className='container'>
           <Users loading={loading} users={users}/>

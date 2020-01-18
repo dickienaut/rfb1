@@ -4,7 +4,7 @@ class Search extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.props.input)
+    this.props.searchUsers(this.props.input)
   }
 
   render() {
