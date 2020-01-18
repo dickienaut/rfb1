@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import Navbar from './components/layout/Navbar.js'
 import Users from './components/users/Users.js'
 import Search from './components/users/Search.js'
+import Alert from './components/layout/Alert.js'
 import './App.css';
 
 class App extends Component {
@@ -9,7 +10,8 @@ class App extends Component {
   state = {
     users: [],
     loading: false,
-    input: ''
+    input: '',
+    alert: null
   }
 
 
@@ -27,10 +29,19 @@ class App extends Component {
 
     fetch(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
       .then(res => res.json())
-      .then(users => this.setState({
+      .then(users => {
+        if(users.items) {
+        this.setState({
               users: users.items,
               loading: false
-            }))
+            })}
+          else {
+            this.setState({
+              users: [],
+              loading: false
+            })
+          }}
+          )
 
     this.setState({
       input: ''
@@ -45,8 +56,16 @@ class App extends Component {
   }
 
 
+  setAlert = (msg, type) => {
+    this.setState({
+      alert: {msg, type}
+    })
+    setTimeout(() => this.setState({alert: null}), 5000)
+  }
+
+
   render() {
-    const {users, loading, input} = this.state
+    const {users, loading, input, alert} = this.state
     console.log()
 
     return (
@@ -54,12 +73,14 @@ class App extends Component {
       <Fragment>
         <Navbar title=' Github Finder' icon={'fab fa-github'}/>
         <div>
+          {alert ? <Alert alert={alert}/> : null}
           <Search
             input={input}
             changeText={this.changeText}
             searchUsers={this.searchUsers}
             clearUsers={this.clearUsers}
             showClear={users.length > 0 ? true : false}
+            setAlert={this.setAlert}
             />
         </div>
         <div className='container'>
