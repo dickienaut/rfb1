@@ -16,16 +16,10 @@ class App extends Component {
     user: {},
     userRepos: [],
     loading: false,
-    input: '',
     alert: null
   }
 
-  //Updates the text field in state when something is typed into the search bar
-  changeText = (text) => {
-    this.setState({
-      input: text
-    })
-  }
+
 
 
   //This hits the github api and gets users based on the text entered in the search field
@@ -103,8 +97,8 @@ class App extends Component {
 
 
   render() {
-    const {users, user, loading, input, alert, userRepos} = this.state
-    console.log(userRepos)
+    const {users, user, loading, alert, userRepos} = this.state
+    console.log()
 
 
     return (
@@ -118,8 +112,6 @@ class App extends Component {
               <div>
               {alert ? <Alert alert={alert}/> : null}
               <Search
-                input={input}
-                changeText={this.changeText}
                 searchUsers={this.searchUsers}
                 clearUsers={this.clearUsers}
                 showClear={users.length > 0 ? true : false}
