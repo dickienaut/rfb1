@@ -8,13 +8,14 @@ const User = ({getUser, getUserRepos, loading, repos, user, match}) => {
   useEffect(() => {
     getUser(match.params.login)
     getUserRepos(match.params.login)
-  }, [getUser, getUserRepos, match.params.login])
+  }, [])
 
 
   const {name, avatar_url, location, bio, blog, company, login, html_url, followers, following, public_repos, public_gists, hireable } = user
 
 
   if (loading) return ( <Spinner />)
+
 
   return (
 
