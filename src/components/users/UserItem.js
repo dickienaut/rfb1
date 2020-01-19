@@ -1,17 +1,18 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 
-const UserItem = ({user}) => {
+const UserItem = ({user: {login, avatar_url, html_url}}) => {
 
   return(
-    
+
     <div className="card text-center">
-      <img src={user.avatar_url} alt='' className='round-img' style={{width: '60px'}}/>
-      <h3>{user.login}</h3>
+      <img src={avatar_url} alt='' className='round-img' style={{width: '60px'}}/>
+      <h3>{login}</h3>
       <div>
-        <a href={user.html_url} value='Github Link' className='btn btn-dark btn-sm my-1'>
+        <Link to={`/users/${login}`} value='Github Link' className='btn btn-dark btn-sm my-1'>
         Link to Github
-        </a>
+      </Link>
 
       </div>
     </div >

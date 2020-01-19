@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Navbar from './components/layout/Navbar.js'
 import Users from './components/users/Users.js'
+import User from './components/users/User.js'
 import Search from './components/users/Search.js'
 import Alert from './components/layout/Alert.js'
 import About from './components/pages/About.js'
@@ -9,14 +10,16 @@ import './App.css';
 
 class App extends Component {
 
+  //Overall State for App
   state = {
     users: [],
+    user: {},
     loading: false,
     input: '',
     alert: null
   }
 
-
+  //Updates the text field in state when something is typed into the search bar
   changeText = (text) => {
     this.setState({
       input: text
@@ -24,6 +27,7 @@ class App extends Component {
   }
 
 
+  //This hits the github api and gets users based on the text entered in the search field
   searchUsers = async (text) => {
     this.setState({
       loading: true
@@ -51,6 +55,7 @@ class App extends Component {
   }
 
 
+  //Clears the users from state
   clearUsers = () => {
     this.setState({
       users: []
@@ -58,6 +63,21 @@ class App extends Component {
   }
 
 
+  getUser = async (username) => {
+    this.setState({loading: true})
+
+    fetch(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+      .then(res => res.json())
+      .then(user => {this.setState({
+        user: user,
+        loading: false
+      })
+    })
+  }
+
+
+  //Updates the alert field of state if someone has searched without entering a search term
+  //There is a timout on the function so that the alert disappears after some period
   setAlert = (msg, type) => {
     this.setState({
       alert: {msg, type}
@@ -67,8 +87,9 @@ class App extends Component {
 
 
   render() {
-    const {users, loading, input, alert} = this.state
+    const {users, user, loading, input, alert} = this.state
     console.log()
+
 
     return (
 
@@ -76,7 +97,7 @@ class App extends Component {
         <Fragment>
           <Navbar title=' Github Finder' icon={'fab fa-github'}/>
           <Switch>
-          <Route exact path='/' render={props => (
+          <Route exact={true} path='/' render={props => (
             <Fragment>
               <div>
               {alert ? <Alert alert={alert}/> : null}
@@ -95,7 +116,11 @@ class App extends Component {
           </Fragment>
           )}
           />
-          <Route exact path='/about' component={About}/>
+          <Route exact={true} path='/about' component={About}/>
+          <Route exact={true} path='/users/:login' render={props => (
+              <User {...props} getUser={this.getUser} user={user} loading={loading}/>
+            )}/>
+
           </Switch>
         </Fragment>
       </Router>

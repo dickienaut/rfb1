@@ -209,6 +209,10 @@ img {
   margin-right: 0.2rem;
 }
 
+.topnav-right {
+  float: right;
+}
+
 .badge {
   font-size: 0.8rem;
   padding: 0.2rem 0.7rem;
