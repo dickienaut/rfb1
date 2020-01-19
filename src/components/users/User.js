@@ -1,18 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import Spinner from '../layout/Spinner.js'
 import { Link } from 'react-router-dom'
+import Repos from '../repos/Repos.js'
 
 class User extends Component {
 
   componentDidMount() {
     const { match: { params } } = this.props
     this.props.getUser(params.login)
+    this.props.getUserRepos(params.login)
 
   }
 
   render() {
     const {name, avatar_url, location, bio, blog, company, login, html_url, followers, following, public_repos, public_gists, hireable } = this.props.user
-    const {loading} = this.props
+    const {loading, repos} = this.props
     console.log(this.props.user)
 
     if (loading) return ( <Spinner />)
@@ -25,8 +27,8 @@ class User extends Component {
         {hireable ? (<i className='fas fa-check text-success'/>) : (<i className='fas fa-times-circle text-danger'/>)}
         <div className='card grid-2'>
           <div className='all-center'>
-            <img className='round-img' src={avatar_url} alt='No image here...' style={{width: '150px'}}/>
-            <h1>{login}</h1>
+            <img className='round-img' src={avatar_url} alt='Nothing here...' style={{width: '150px'}}/>
+            <h1>{name ? name : login}</h1>
             <p>Location: {location ? location : 'No location info'}</p>
           </div>
           <div>
@@ -61,11 +63,12 @@ class User extends Component {
           <div className='badge badge-danger'>Public Repos: {public_repos} </div>
           <div className='badge badge-dark'>Public Gists {public_gists} </div>
         </div>
+        <div>
+          <Repos repos={repos}/>
+        </div>
       </Fragment>
-
     );
   }
-
 }
 
 export default User;
