@@ -7,7 +7,7 @@ import GithubContext from '../../context/github/githubContext.js'
 const Users = () => {
   const githubContext = useContext(GithubContext)
   const {loading, users} = githubContext
-  console.log(users)
+
   return(
 
     <div style={userStyle}>

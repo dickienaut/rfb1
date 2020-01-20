@@ -6,7 +6,8 @@ import {
   SET_LOADING,
   CLEAR_USERS,
   GET_USER,
-  GET_REPOS
+  GET_REPOS,
+  SET_INPUT
 } from '../types'
 
 
@@ -15,11 +16,14 @@ const GithubState = (props) => {
     users: [],
     user: {},
     repos: [],
-    loading: false
+    loading: false,
+    input: ''
   }
+
 
   const [state, dispatch] = useReducer(GithubReducer, initialState)
 
+  console.log(state.input)
 
   //This hits the github api and gets users based on the text entered in the search field
   const searchUsers = async (text) => {
@@ -67,6 +71,15 @@ const GithubState = (props) => {
   }
 
 
+  // Set state based on what has been entered in the search field
+  const setInput = (text) => {
+    dispatch({
+      type: SET_INPUT,
+      payload: text
+    })
+  }
+
+
   //Clears the users from state
   const clearUsers = () => dispatch({type: CLEAR_USERS})
 
@@ -83,10 +96,12 @@ const GithubState = (props) => {
       user: state.user,
       repos: state.repos,
       loading: state.loading,
+      input: state.input,
       searchUsers,
       clearUsers,
       getUser,
-      getUserRepos
+      getUserRepos,
+      setInput
       }}
     >
       {props.children}

@@ -13,17 +13,8 @@ import './App.css';
 const App = () => {
 
   //Overall State for App
-  const [loading, setLoading] = useState(false)
+
   const [alert, setAlert] = useState(null)
-
-
-
-
-
-
-
-
-
 
 
   //Updates the alert field of state if someone has searched without entering a search term
@@ -34,7 +25,7 @@ const App = () => {
     setTimeout(() => setAlert(null), 5000)
   }
 
-  console.log(loading)
+  console.log()
 
   return (
     <GithubState>
@@ -42,23 +33,20 @@ const App = () => {
         <Fragment>
           <Navbar title=' Github Finder' icon={'fab fa-github'}/>
           <Switch>
-          <Route exact={true} path='/' render={props => (
-            <Fragment>
-              <div>
-              {alert ? <Alert alert={alert}/> : null}
-              <Search
-                setAlert={showAlert}
-                />
-            </div>
-            <div className='container'>
-              <Users />
-            </div>
-          </Fragment>
-          )}
-          />
-          <Route exact={true} path='/about' component={About}/>
-          <Route exact={true} path='/users/:login' component={User}/>
-
+            <Route exact={true} path='/' render={props => (
+              <Fragment>
+                <div>
+                  {alert ? <Alert alert={alert}/> : null}
+                  <Search setAlert={showAlert}/>
+                </div>
+                <div className='container'>
+                  <Users />
+                </div>
+              </Fragment>
+              )}
+            />
+            <Route exact={true} path='/about' component={About}/>
+            <Route exact={true} path='/users/:login' component={User}/>
           </Switch>
         </Fragment>
       </Router>
