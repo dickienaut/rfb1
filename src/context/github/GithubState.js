@@ -10,7 +10,6 @@ import {
   SET_INPUT
 } from '../types'
 
-
 const GithubState = (props) => {
   const initialState = {
     users: [],
@@ -20,10 +19,7 @@ const GithubState = (props) => {
     input: ''
   }
 
-
   const [state, dispatch] = useReducer(GithubReducer, initialState)
-
-  console.log(state.input)
 
   //This hits the github api and gets users based on the text entered in the search field
   const searchUsers = async (text) => {
@@ -90,7 +86,6 @@ const GithubState = (props) => {
 
 
   return(
-
     <GithubContext.Provider value={{
       users: state.users,
       user: state.user,

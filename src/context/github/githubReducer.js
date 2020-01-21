@@ -45,15 +45,12 @@ export default (state, action) => {
       }
 
     case SET_INPUT:
-      console.log(action.payload)
       return {
         ...state,
         input: action.payload
       }
 
-
     default:
       return state;
-
   }
 }
